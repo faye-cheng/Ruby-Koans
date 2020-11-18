@@ -4,7 +4,8 @@
 
 #### assert equality of two values
 
-You can use the keyword *assert* in `assert a == b`, but it is better practice to use *assert_equal* in `assert_equal c, d`
+You can use the keyword assert in `assert a == b`.\
+But it is better practice to use assert_equal in `assert_equal c, d`
 
 
 ## About Nil
@@ -32,42 +33,20 @@ You can call ex.class and ex.message to validate
 
   `assert_match(/undefined method 'some_method_nil_doesnt_know_about' for nil:NilClass/, ex.message)`
 
-#### test_nil_has_a_few_methods_defined_on_it
-
 - `nil.nil?`      checks if nil, boolean
 - `nil.to_s`      nil to string is ""
 - `nil.inspect`   "nil"
-
-**Q**: Look into `.inspect` and what it does
 
 
 ## About Objects
 
 #### Everything is an object
 
-- `assert_equal true, 1.is_a?(Object)`
-- `assert_equal true, 1.5.is_a?(Object)`
-- `assert_equal __, "string".is_a?(Object)`
-- `assert_equal __, nil.is_a?(Object)`
-- `assert_equal __, Object.is_a?(Object)`
+Examples: 1, 1.5, "string", nil, Object
+
+You can verify by `some_element.is_a?(Object)`
 
 #### Every object has an id
-
-```
-def test_every_object_has_an_id
-  obj = Object.new
-  assert_equal Integer, obj.object_id.class
-end
-```
-
-#### test_small_integers_have_fixed_ids
-
-- `assert_equal 1, 0.object_id`   
-- `assert_equal 3, 1.object_id`
-- `assert_equal 5, 2.object_id`
-- `assert_equal 201, 100.object_id`
-
-Object IDs for small integers follow this pattern for x: x.object_id is **2x + 1**
 
 #### obj.clone
 
@@ -89,7 +68,7 @@ You can clone objects by `.clone` and this will result in a new object with a di
 
 #### slicing
 
-[start, length] aka array position, elements after start\
+[start, length] aka array position, elements after start
 
 If you have an array with 4 elements:
 
@@ -117,3 +96,11 @@ Range is a class type, `[1,2,3,4,5]` and `(1..5)` are not equal
 
 `array.unshift(some_element)` unshift is like push, but to the beginning of the array\
 `array.shift` shift is like pop, but for the beginning of the array
+
+
+## About Array Assignments
+
+#### Examples
+
+`name = ["Faye", "Cheng"]` => `assert_equal ["Faye", "Cheng"], name`\
+`first_name, last_name = ["Faye", "Cheng"]` => `assert_equal "Faye", first_name` and `
