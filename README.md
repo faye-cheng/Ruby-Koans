@@ -6,6 +6,7 @@
 
 You can use the keyword *assert* in `assert a == b`, but it is better practice to use *assert_equal* in `assert_equal c, d`
 
+
 ## About Nil
 
 Ruby uses nil instead of null in other languages
@@ -39,6 +40,7 @@ You can call ex.class and ex.message to validate
 
 **Q**: Look into `.inspect` and what it does
 
+
 ## About Objects
 
 #### Everything is an object
@@ -70,3 +72,48 @@ Object IDs for small integers follow this pattern for x: x.object_id is **2x + 1
 #### obj.clone
 
 You can clone objects by `.clone` and this will result in a new object with a different object ID
+
+
+## About Arrays
+
+#### adding elements
+
+`array << some_element`
+`array[1] = some_element`
+
+#### accessing elements
+
+- `array.first`
+- `array.last`
+- `array[-1]` negative element loops from 0 to the other end of array
+
+#### slicing
+
+[start, length] aka array position, elements after start\
+
+If you have an array with 4 elements:
+
+`array = [:peanut, :butter, :and, :jelly]`
+
+Why is `array[4,0] == []` while `array[5,0] == nil`?
+
+This is because of how slicing works, it is inbetween elements in an array. So in this case, technically 4 is within the slicing range and is valid, while 5 is outside and invalid.
+
+#### ranges
+
+Range is a class type, `[1,2,3,4,5]` and `(1..5)` are not equal
+
+`(1..5).to_a is [1, 2, 3, 4, 5]` while `(1...5).to_a is [1, 2, 3, 4]`
+
+".." range is from element x to y\
+"..." range is from element x to y, excluding y
+
+#### pushing and popping
+
+`array.push(some_element)` adds an element to the end of the array\
+`array.pop` is the removed last element from the end of the array
+
+#### shift and unshift
+
+`array.unshift(some_element)` unshift is like push, but to the beginning of the array\
+`array.shift` shift is like pop, but for the beginning of the array
