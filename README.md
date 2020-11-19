@@ -84,8 +84,8 @@ Range is a class type, `[1,2,3,4,5]` and `(1..5)` are not equal
 
 `(1..5).to_a is [1, 2, 3, 4, 5]` while `(1...5).to_a is [1, 2, 3, 4]`
 
-".." range is from element x to y\
-"..." range is from element x to y, excluding y
+`..` range is from element x to y\
+`...` range is from element x to y, excluding y
 
 #### pushing and popping
 
@@ -100,7 +100,15 @@ Range is a class type, `[1,2,3,4,5]` and `(1..5)` are not equal
 
 ## About Array Assignments
 
-#### Examples
+#### examples
 
-`name = ["Faye", "Cheng"]` => `assert_equal ["Faye", "Cheng"], name`\
-`first_name, last_name = ["Faye", "Cheng"]` => `assert_equal "Faye", first_name` and `
+- `name = ["Faye", "Cheng"]` => `assert_equal ["Faye", "Cheng"], name`
+- `first_name, last_name = ["Faye", "Cheng"]` => `assert_equal "Faye", first_name` and `assert_equal "Cheng", last_name`
+- `name, = ["Faye", "Cheng"]` => `assert_equal "Faye", name` (This is tricky, the comma makes it a parallel assignment, so Cheng gets dropped)
+- `first_name, last_name = ["Faye"]` => `assert_equal "Faye", first_name` and `assert_equal nil, last_name` (first_name was declared first)
+
+#### splat
+
+You can use the splat operator whenever you don't want to specify the num of args you have.\
+`*args` means "gooble up remaining args in an array and bind them to the parameter named `args`"\
+`*` means "gobble up all the remaining args and bind them to nothing, ignore all remaining args"
