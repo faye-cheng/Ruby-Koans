@@ -112,3 +112,77 @@ Range is a class type, `[1,2,3,4,5]` and `(1..5)` are not equal
 You can use the splat operator whenever you don't want to specify the num of args you have.\
 `*args` means "gooble up remaining args in an array and bind them to the parameter named `args`"\
 `*` means "gobble up all the remaining args and bind them to nothing, ignore all remaining args"
+
+
+
+## About Hashes
+
+- `empty_hash = Hash.new` creates a new hash
+- `{}` is an empty hash
+- hashes are unordered
+
+#### fetch
+
+Returns a value from the hash for the given key. If the key can’t be found, there are several options: With no other arguments, it will raise a KeyError exception; if default is given, then that will be returned; if the optional code block is specified, then that will be run and its result returned. (https://apidock.com/ruby/Hash/fetch)
+
+You can specify a default value by:
+
+```
+{a: false}.fetch(:b, true)
+=> true
+{a: false}.fetch(:a, true)
+=> false
+```
+
+Q: Why might you want to use #fetch instead of #[] when accessing hash keys?
+
+- with [], the creator of the hash controls what happens when a key does not exist, with fetch you do
+- if the missing key is exception-worthy, then it is better to return an exception instead of nil
+
+#### changing hashes
+
+Q: Why was "expected" broken out into a variable rather than used as a literal?
+
+- Because you cannot do something like `assert_equal { :one => "eins", :two => "dos" }, hash`
+Ruby thinks that { ... } is a block, so it should be "broken out into a variable", but you can always use assert_equal({ :one => "eins", :two => "dos" }, hash)
+
+#### hash keys & values
+
+- `hash.keys.include?` tells you if a given key exists in the hash
+- `hash.values.include?` tells you if a given value exists in the hash
+- `hash.keys.size` tells you how many keys are in the hash
+- `hash.values.size` tells you how many values are in the hash
+
+- Given a hash `hash = { :one => "uno", :two => "dos" }` then `hash.keys.class` is Array
+
+#### combining hashes
+
+- use `.merge()` to combine two hashes and return a new hash (https://apidock.com/ruby/Hash/merge)
+- example:
+
+```
+hash = { "jim" => 53, "amy" => 20, "dan" => 23 }
+new_hash = hash.merge({ "jim" => 54, "jenny" => 26 })
+
+expected = { "jim" => 54, "amy" => 20, "dan" => 23, "jenny" => 26 }
+assert_equal true, expected == new_hash
+```
+
+If there are duplicate keys for the hashes being merged but with different values, then the value of the other_hash takes priority. You see that above where the value for "jim" is 54 instead of 53 in the new hash.
+
+#### default values
+
+You can create a default value by `hash = Hash.new("dos")` so if you do `hash[:two]` which is a key that does not exist yet, you get back "dos" since it was defaulted. Without the default value, if you did `hash = Hash.new`, then `hash[:two]` will give you nil.
+
+
+#### default value is the same object
+
+- `hash = Hash.new([])` will instantiate a new array with [] then make a hash with [] as its default
+- `hash[:one] << "uno"` will add "uno" to the default []
+- `hash[:two] << "dos` will add "dos" to the default [] which now contains "uno"
+
+If you wanted the code to behave like you think it should, with a different array in each key, you need to return a new array every time you want a default, not Harvey every single time:
+
+`hash = Hash.new { |h, k| h[k] = [] }`
+
+or better yet, if you don't want the hash to deal with arrays then just use this pattern: `hash[:one] = "uno"`
